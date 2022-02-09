@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'widget/available_meals.dart';
+import 'screens/available_meals.dart';
 import 'widget/categories_list.dart';
 
 void main() => runApp(_CookBookApp());
