@@ -1,3 +1,4 @@
+import 'package:cookbook/screens/meal_recipe.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/available_meals.dart';
@@ -21,7 +22,8 @@ class _CookBookAppState extends State<_CookBookApp> {
           ),
           body: CategoriesList()),
       routes: {
-        "/recipies": (context) => AvailableMeals(),
+        AvailableMeals.route(): (context) => AvailableMeals(),
+        MealRecipe.route():(context) => MealRecipe(),
       },
     ); // This trailing comma makes auto-formatting nicer for build methods.
   }

@@ -1,4 +1,5 @@
 import 'package:cookbook/data/dummy_data.dart';
+import 'package:cookbook/screens/available_meals.dart';
 import 'package:flutter/material.dart';
 
 
@@ -7,7 +8,7 @@ class CategoriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void changeToRecipe(context, String pagetitle, String pageid) {
-      Navigator.of(context).pushNamed('/recipies',
+      Navigator.of(context).pushNamed(AvailableMeals.route(),
           arguments: {'id': pageid, 'title': pagetitle});
     }
 
