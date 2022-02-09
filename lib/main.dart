@@ -53,7 +53,7 @@ class _CookBookAppState extends State<_CookBookApp> {
               crossAxisSpacing: 10,
             ),
             children: temp.map((cat) {
-              return InkResponse(
+              return InkWell(
                 onTap: () => changeToRecipe(context, cat.title, cat.id),
                 radius: 10,
                 borderRadius: BorderRadius.circular(15),
