@@ -12,11 +12,38 @@ class MealRecipe extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     final id = detail['id'];
     final ingredients = dummyMeals.where((element) {
-      return element.ingredients.contains(element.id == id);
+      return element.ingredients.contains(id);
     });
     final recipe = dummyMeals.where((element) {
-      return element.steps.contains(element.id == id);
+      return element.steps.contains(id);
     });
-    return Center(child:Text('Working Fine'));
+    final name = dummyMeals.where((element) {
+      return element.title.contains(id!);
+    });
+    return Scaffold(
+      appBar: AppBar(title: Text('$name')),
+      body: Column(
+        children: [
+          Card(
+            child: Column(
+              children: [
+                ...ingredients.map((current) {
+                  return Text('$current');
+                }),
+                Card(
+                  child: Column(
+                    children: [
+                      ...recipe.map((current) {
+                        return Text('$current');
+                      }),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
