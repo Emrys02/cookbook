@@ -6,19 +6,13 @@ import 'widget/categories_list.dart';
 
 void main() => runApp(_CookBookApp());
 
-class _CookBookApp extends StatefulWidget {
-  @override
-  _CookBookAppState createState() => _CookBookAppState();
-}
-
-class _CookBookAppState extends State<_CookBookApp> {
-
+class _CookBookApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text('CookBook'),
+            title: const Text('CookBook'),
           ),
           body: CategoriesList()),
       routes: {

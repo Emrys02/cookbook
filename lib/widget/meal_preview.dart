@@ -86,13 +86,12 @@ class MealPreview extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(
-                            top: 10, left: 0, bottom: 10, right: 0),
+                        padding: const EdgeInsets.symmetric(vertical:10, horizontal:0),
                         color: Colors.black54,
                         width: 200,
                         child: Text(
                           title,
-                          style: TextStyle(fontSize: 20, color: Colors.white),
+                          style: const TextStyle(fontSize: 20, color: Colors.white),
                           textAlign: TextAlign.center,
                           softWrap: true,
                           overflow: TextOverflow.clip,
@@ -104,7 +103,7 @@ class MealPreview extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -112,7 +111,7 @@ class MealPreview extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.access_time_rounded,
                     ),
                     Text('$duration mins'),
@@ -120,7 +119,7 @@ class MealPreview extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.work_outline_rounded,
                       color: Colors.black,
                     ),
@@ -129,14 +128,14 @@ class MealPreview extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.attach_money_rounded,
                       color: Colors.green,
                     ),
                     Text(price),
                   ],
                 ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
               ],
