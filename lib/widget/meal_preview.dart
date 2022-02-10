@@ -48,7 +48,7 @@ class MealPreview extends StatelessWidget {
   }
 
   void changeToMealrecipe(context) {
-    Navigator.of(context).pushNamed(MealRecipe.route());
+    Navigator.of(context).pushNamed(MealRecipe.route(), arguments: {'id': id});
   }
 
   @override
@@ -115,7 +115,7 @@ class MealPreview extends StatelessWidget {
                     Icon(
                       Icons.access_time_rounded,
                     ),
-                    Text('$duration'),
+                    Text('$duration mins'),
                   ],
                 ),
                 Row(
@@ -136,6 +136,9 @@ class MealPreview extends StatelessWidget {
                     Text(price),
                   ],
                 ),
+            SizedBox(
+              height: 10,
+            ),
               ],
             ),
           ],

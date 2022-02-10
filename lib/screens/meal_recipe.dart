@@ -1,4 +1,4 @@
-import 'package:cookbook/data/dummy_data.dart';
+import '../data/dummy_data.dart';
 import 'package:flutter/material.dart';
 
 class MealRecipe extends StatelessWidget {
@@ -8,7 +8,15 @@ class MealRecipe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(child: Text('data')
-    );
+    final detail =
+        ModalRoute.of(context)?.settings.arguments as Map<String, String>;
+    final id = detail['id'];
+    final ingredients = dummyMeals.where((element) {
+      return element.ingredients.contains(element.id == id);
+    });
+    final recipe = dummyMeals.where((element) {
+      return element.steps.contains(element.id == id);
+    });
+    return Center(child:Text('Working Fine'));
   }
 }
