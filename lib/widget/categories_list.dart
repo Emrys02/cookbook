@@ -34,7 +34,7 @@ class CategoriesList extends StatelessWidget {
               ClipRRect(
                 clipBehavior: Clip.antiAlias,
                 borderRadius: BorderRadius.circular(15),
-                child: Image.network(
+                child:  Image.network(
                   imageurl, 
                   width: double.infinity,
                   fit: BoxFit.cover,
@@ -44,7 +44,18 @@ class CategoriesList extends StatelessWidget {
               Positioned(
                 bottom: 5, 
                 left: 5, 
-                child: Container(child: Text(cat.title),),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black38, 
+                    borderRadius: BorderRadius.circular(3)), 
+                    padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 3), 
+                  child: Text(
+                    cat.title, 
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w400, 
+                      fontSize: 15),
+                  ),
+                ),
               ),
             ],)
           );

@@ -51,7 +51,7 @@ class _MealRecipeState extends State<MealRecipe> {
         children: [
           Container(
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
             height: (deviceProperties.size.height -
                     deviceProperties.padding.top -
                     appbar.preferredSize.height) *
@@ -70,12 +70,6 @@ class _MealRecipeState extends State<MealRecipe> {
             height: (deviceProperties.size.height -
                     deviceProperties.padding.top -
                     appbar.preferredSize.height) *
-                0.05,
-          ),
-          SizedBox(
-            height: (deviceProperties.size.height -
-                    deviceProperties.padding.top -
-                    appbar.preferredSize.height) *
                 0.15,
               width: deviceProperties.size.width,
             child: Row(
@@ -83,24 +77,24 @@ class _MealRecipeState extends State<MealRecipe> {
               children: [
                 Container(
                   width: deviceProperties.size.width * 0.45,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(20)), color: style1),
+                  decoration: BoxDecoration(borderRadius: const BorderRadius.only(topLeft: Radius.circular(20)), color: style1),
                   margin: EdgeInsets.only(left:(deviceProperties.size.width * 0.05)),
                   child: TextButton(
                     onPressed: () => setState(() {
                       isIngredients = true;
                     }),
-                    child: Text('Ingredients', style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
+                    child: const Text('Ingredients', style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
                   ),
                 ),
                 Container(
                   width: deviceProperties.size.width * 0.45,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(20)), color: style2),
+                  decoration: BoxDecoration(borderRadius: const BorderRadius.only(topRight: Radius.circular(20)), color: style2),
                   margin: EdgeInsets.only(right:(deviceProperties.size.width * 0.05)),
                   child: TextButton(
                     onPressed: () => setState(() {
                       isIngredients = false;
                     }),
-                    child: Text('Recipe', style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
+                    child: const Text('Recipe', style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
                   ),
                 ),
               ],
@@ -122,7 +116,7 @@ class _MealRecipeState extends State<MealRecipe> {
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   return ListTile(title: Text(ingredients[index], style: TextStyle(fontWeight: FontWeight.w600),),
-                  subtitle: Divider(),);
+                  subtitle: const Divider(),);
                 },
                 itemCount: ingredients.length,
               ),
@@ -133,7 +127,7 @@ class _MealRecipeState extends State<MealRecipe> {
                       deviceProperties.padding.top -
                       appbar.preferredSize.height) *
                   0.5,
-                  margin: EdgeInsets.symmetric(horizontal: 5),
+                  margin: EdgeInsets.symmetric(horizontal: (deviceProperties.size.width * 0.05)),
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
@@ -146,8 +140,8 @@ class _MealRecipeState extends State<MealRecipe> {
                       leading: CircleAvatar(
                         child: Text('${index + 1}'),
                       ),
-                      title: Text(recipe[index], style: TextStyle(fontWeight: FontWeight.w600)),
-                      subtitle: Divider(),);
+                      title: Text(recipe[index], style: const TextStyle(fontWeight: FontWeight.w600)),
+                      subtitle: const Divider(),);
                 },
                 itemCount: recipe.length,
               ),

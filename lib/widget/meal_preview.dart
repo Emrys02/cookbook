@@ -53,6 +53,9 @@ class MealPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+  final deviceProperties = MediaQuery.of(context);
+
     return InkWell(
       radius: 20,
       borderRadius: BorderRadius.circular(30),
@@ -70,7 +73,7 @@ class MealPreview extends StatelessWidget {
                   child: Image.network(
                     imageUrl,
                     cacheHeight: 250,
-                    height: 250,
+                    height: deviceProperties.size.height * 0.3,
                     width: double.infinity,
                     fit: BoxFit.cover,
                     filterQuality: FilterQuality.high,
@@ -88,11 +91,11 @@ class MealPreview extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(vertical:10, horizontal:0),
-                        color: Colors.black54,
-                        width: 200,
+                        color: Colors.black38,
+                        width: 150,
                         child: Text(
                           title,
-                          style: const TextStyle(fontSize: 20, color: Colors.white),
+                          style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                           softWrap: true,
                           overflow: TextOverflow.clip,
