@@ -1,9 +1,33 @@
 import '../data/dummy_data.dart';
 import 'package:flutter/material.dart';
 
-class MealRecipe extends StatelessWidget {
+class MealRecipe extends StatefulWidget {
   static String route() {
     return "/recipe";
+  }
+
+  @override
+  State<MealRecipe> createState() => _MealRecipeState();
+}
+
+class _MealRecipeState extends State<MealRecipe> {
+  bool isIngredients = true;
+
+  get style1 {
+    switch (isIngredients) {
+      case true:
+        return Colors.grey.withOpacity(0.1);
+      default:
+        return Colors.white12;
+    }
+  }
+  get style2 {
+    switch (isIngredients) {
+      case false:
+        return Colors.grey.withOpacity(0.1);
+      default:
+        return Colors.white12;
+    }
   }
 
   @override
@@ -11,37 +35,123 @@ class MealRecipe extends StatelessWidget {
     final detail =
         ModalRoute.of(context)?.settings.arguments as Map<String, String>;
     final id = detail['id'];
-    final ingredients = dummyMeals.where((element) {
-      return element.ingredients.contains(id);
-    });
-    final recipe = dummyMeals.where((element) {
-      return element.steps.contains(id);
-    });
-    final name = dummyMeals.where((element) {
-      return element.title.contains(id!);
-    });
+
+    final selectedmeal = dummyMeals.firstWhere((element) => element.id == id);
+    final ingredients = selectedmeal.ingredients;
+    final recipe = selectedmeal.steps;
+    final name = selectedmeal.title;
+    final imagelink = selectedmeal.imageUrl;
+
+    final deviceProperties = MediaQuery.of(context);
+    final appbar = AppBar(title: Text(name));
+
     return Scaffold(
-      appBar: AppBar(title: Text('$name')),
+      appBar: appbar,
       body: Column(
         children: [
-          Card(
-            child: Column(
+          Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            height: (deviceProperties.size.height -
+                    deviceProperties.padding.top -
+                    appbar.preferredSize.height) *
+                0.3,
+            child: ClipRRect(
+              clipBehavior: Clip.antiAlias,
+              borderRadius: BorderRadius.circular(15),
+              child: Image.network(
+                imagelink,
+                fit: BoxFit.contain,
+                filterQuality: FilterQuality.high,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: (deviceProperties.size.height -
+                    deviceProperties.padding.top -
+                    appbar.preferredSize.height) *
+                0.05,
+          ),
+          SizedBox(
+            height: (deviceProperties.size.height -
+                    deviceProperties.padding.top -
+                    appbar.preferredSize.height) *
+                0.15,
+              width: deviceProperties.size.width,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                ...ingredients.map((current) {
-                  return Text('$current');
-                }),
-                Card(
-                  child: Column(
-                    children: [
-                      ...recipe.map((current) {
-                        return Text('$current');
-                      }),
-                    ],
+                Container(
+                  width: deviceProperties.size.width * 0.45,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topLeft: Radius.circular(20)), color: style1),
+                  margin: EdgeInsets.only(left:(deviceProperties.size.width * 0.05)),
+                  child: TextButton(
+                    onPressed: () => setState(() {
+                      isIngredients = true;
+                    }),
+                    child: Text('Ingredients', style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
                   ),
-                )
+                ),
+                Container(
+                  width: deviceProperties.size.width * 0.45,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.only(topRight: Radius.circular(20)), color: style2),
+                  margin: EdgeInsets.only(right:(deviceProperties.size.width * 0.05)),
+                  child: TextButton(
+                    onPressed: () => setState(() {
+                      isIngredients = false;
+                    }),
+                    child: Text('Recipe', style: TextStyle(fontSize: 16), textAlign: TextAlign.center,),
+                  ),
+                ),
               ],
             ),
           ),
+          if (isIngredients)
+            Container(
+              height: (deviceProperties.size.height -
+                      deviceProperties.padding.top -
+                      appbar.preferredSize.height) *
+                  0.5,
+                  margin: EdgeInsets.symmetric(horizontal: (deviceProperties.size.width * 0.05)),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
+                color: Colors.grey.withOpacity(0.1),
+              ),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return ListTile(title: Text(ingredients[index], style: TextStyle(fontWeight: FontWeight.w600),),
+                  subtitle: Divider(),);
+                },
+                itemCount: ingredients.length,
+              ),
+            ),
+          if (!isIngredients)
+            Container(
+              height: (deviceProperties.size.height -
+                      deviceProperties.padding.top -
+                      appbar.preferredSize.height) *
+                  0.5,
+                  margin: EdgeInsets.symmetric(horizontal: 5),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
+                color: Colors.grey.withOpacity(0.1),
+              ),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  return ListTile(
+                      leading: CircleAvatar(
+                        child: Text('${index + 1}'),
+                      ),
+                      title: Text(recipe[index], style: TextStyle(fontWeight: FontWeight.w600)),
+                      subtitle: Divider(),);
+                },
+                itemCount: recipe.length,
+              ),
+            ),
         ],
       ),
     );

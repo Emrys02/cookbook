@@ -2,9 +2,7 @@ import 'package:cookbook/data/dummy_data.dart';
 import 'package:cookbook/screens/available_meals.dart';
 import 'package:flutter/material.dart';
 
-
 class CategoriesList extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     void changeToRecipe(context, String pagetitle, String pageid) {
@@ -12,35 +10,43 @@ class CategoriesList extends StatelessWidget {
           arguments: {'id': pageid, 'title': pagetitle});
     }
 
+    final deviceProperties = MediaQuery.of(context);
+
     return Center(
       child: GridView(
         padding: const EdgeInsets.all(15),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 150,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: deviceProperties.size.width * 0.5,
           mainAxisSpacing: 10,
-          childAspectRatio: 4 / 3,
+          childAspectRatio: 5 / 3,
           crossAxisSpacing: 10,
         ),
         children: dummyCategories.map((cat) {
+          var id = cat.id;
+          var foods = dummyMeals
+              .firstWhere((element) => element.categories.contains(id));
+          var imageurl = foods.imageUrl;
           return InkWell(
             onTap: () => changeToRecipe(context, cat.title, cat.id),
             radius: 10,
             borderRadius: BorderRadius.circular(15),
-            child: Container(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(cat.title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w400),),
-              ),
-              decoration: BoxDecoration(
+            child: Stack(children: [
+              ClipRRect(
+                clipBehavior: Clip.antiAlias,
                 borderRadius: BorderRadius.circular(15),
-                gradient: SweepGradient(colors: [
-                  cat.color.withOpacity(0.3),
-                  cat.color.withOpacity(0.5),
-                  cat.color.withOpacity(0.8),
-                  cat.color
-                ]),
+                child: Image.network(
+                  imageurl, 
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  filterQuality: FilterQuality.high,
+                ),
               ),
-            ),
+              Positioned(
+                bottom: 5, 
+                left: 5, 
+                child: Container(child: Text(cat.title),),
+              ),
+            ],)
           );
         }).toList(),
       ),

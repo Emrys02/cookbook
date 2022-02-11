@@ -12,6 +12,7 @@ class _CookBookApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
+            leading: Icon(Icons.menu_rounded),
             title: const Text('CookBook'),
           ),
           body: CategoriesList()),

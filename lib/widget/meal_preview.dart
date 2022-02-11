@@ -69,6 +69,7 @@ class MealPreview extends StatelessWidget {
                 ClipRRect(
                   child: Image.network(
                     imageUrl,
+                    cacheHeight: 250,
                     height: 250,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -135,10 +136,10 @@ class MealPreview extends StatelessWidget {
                     Text(price),
                   ],
                 ),
+              ],
+            ),
             const SizedBox(
               height: 10,
-            ),
-              ],
             ),
           ],
         ),
