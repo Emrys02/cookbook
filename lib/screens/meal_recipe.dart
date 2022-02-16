@@ -2,9 +2,7 @@ import '../data/dummy_data.dart';
 import 'package:flutter/material.dart';
 
 class MealRecipe extends StatefulWidget {
-  static String route() {
-    return "/recipe";
-  }
+  static const route = "/recipe";
 
   @override
   State<MealRecipe> createState() => _MealRecipeState();
@@ -59,11 +57,11 @@ class _MealRecipeState extends State<MealRecipe> {
             child: ClipRRect(
               clipBehavior: Clip.antiAlias,
               borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                imagelink,
-                fit: BoxFit.contain,
-                filterQuality: FilterQuality.high,
-              ),
+              child: FadeInImage.assetNetwork(
+                    placeholder: 'lib/images/loading.gif', 
+                    image: imagelink,
+                    fit: BoxFit.cover,
+                  ),
             ),
           ),
           SizedBox(

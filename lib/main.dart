@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
+import 'data/dummy_data.dart';
+
+import 'models/filter_data.dart';
+import 'models/meal.dart';
+
 import 'screens/available_meals.dart';
-import 'widget/categories_list.dart';
+import 'screens/navigation_pages.dart';
 import 'screens/meal_recipe.dart';
+import 'screens/filters.dart';
+
+import 'widget/categories_list.dart';
 import 'widget/favourites_list.dart';
+import 'widget/side_drawer.dart';
 
 void main() => runApp(_CookBookApp());
 
@@ -13,14 +22,47 @@ class _CookBookApp extends StatefulWidget {
 }
 
 class _CookBookAppState extends State<_CookBookApp> {
-  final List<Widget> _pages = [CategoriesList(), FavouritesList()];
+  FilterData filters = FilterData(gluten: false, lactose: false, vegan: false);
 
-  int selectedPageIndex = 0;
-
-  void _selectpage(int value) {
+  void _setfilters(FilterData filtersData) {
     setState(() {
-      selectedPageIndex = value;
+      filters = filtersData;
+
+      _availableMeals = dummyMeals.where((meal) {
+        if (filters.gluten && !meal.glutenFree) {
+          return false;
+        }
+        if (filters.vegan && !meal.vegan) {
+          return false;
+        }
+        if (filters.lactose && !meal.lactoseFree) {
+          return false;
+        }
+        return true;
+      }).toList();
     });
+  }
+
+  List<Meal> _availableMeals = dummyMeals;
+
+  List<Meal> _favouriteMeals = [];
+
+  void _toggleFavourite(String mealId) {
+    final index = _favouriteMeals.indexWhere((element) => element.id == mealId);
+    if (index >= 0) {
+      setState(() {
+        _favouriteMeals.removeAt(index);
+      });
+    } else {
+      setState(() {
+        _favouriteMeals
+            .add(dummyMeals.firstWhere((element) => element.id == mealId));
+      });
+    }
+  }
+
+  bool isFavourite(String id) {
+    return _favouriteMeals.any((element) => element.id == id);
   }
 
   @override
@@ -28,28 +70,18 @@ class _CookBookAppState extends State<_CookBookApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          leading: const Icon(Icons.menu_rounded),
           title: const Text('CookBook'),
         ),
-        body: _pages[selectedPageIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.category_rounded),
-              label: 'Categories',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_rounded), 
-                label: 'Favourites',
-            )
-          ],
-          onTap: (index) => _selectpage(index),
-          currentIndex: selectedPageIndex,
-        ),
+        drawer: const SideDrawer(),
+        body: NavigationPages(_favouriteMeals, _availableMeals),
       ),
       routes: {
-        AvailableMeals.route(): (context) => AvailableMeals(),
-        MealRecipe.route(): (context) => MealRecipe(),
+        AvailableMeals.route: (context) =>
+            AvailableMeals(_availableMeals, _toggleFavourite, isFavourite),
+        MealRecipe.route: (context) => MealRecipe(),
+        FavouritesList.route: (context) => FavouritesList(_favouriteMeals),
+        CategoriesList.route: (context) => CategoriesList(_availableMeals),
+        Filters.route: (context) => Filters(filters, _setfilters),
       },
     );
   }
