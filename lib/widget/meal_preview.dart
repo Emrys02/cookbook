@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../screens/meal_recipe.dart';
 import '../models/meal.dart';
+import '../screens/meal_recipe.dart';
 
 class MealPreview extends StatelessWidget {
   final String title;
@@ -13,15 +13,17 @@ class MealPreview extends StatelessWidget {
   final Function toggleFavourite;
   final bool state;
 
-  MealPreview(
-      {required this.affordability,
-      required this.complexity,
-      required this.duration,
-      required this.imageUrl,
-      required this.title,
-      required this.id,
-      required this.toggleFavourite,
-      required this.state});
+  const MealPreview({
+    required this.affordability,
+    required this.complexity,
+    required this.duration,
+    required this.imageUrl,
+    required this.title,
+    required this.id,
+    required this.toggleFavourite,
+    required this.state,
+    super.key,
+  });
 
   String get difficulty {
     switch (complexity) {
@@ -51,23 +53,22 @@ class MealPreview extends StatelessWidget {
     }
   }
 
-  void changeToMealrecipe(context) {
-    Navigator.of(context)
-        .pushNamed(MealRecipe.route, arguments: {'id': id});
+  void _changeToMealrecipe(context) {
+    Navigator.of(context).pushNamed(MealRecipe.route, arguments: {'id': id});
   }
 
-  Widget CustomSwitch(bool state) {
+  Widget _customSwitch(bool state) {
     if (state) {
       return IconButton(
-          onPressed: ()=> toggleFavourite(id),
-          icon: Icon(
+          onPressed: () => toggleFavourite(id),
+          icon: const Icon(
             Icons.favorite_rounded,
             color: Colors.pink,
           ));
     } else {
       return IconButton(
           onPressed: () {},
-          icon: Icon(
+          icon: const Icon(
             Icons.favorite_outline_rounded,
             color: Colors.black,
           ));
@@ -82,7 +83,7 @@ class MealPreview extends StatelessWidget {
       radius: 20,
       borderRadius: BorderRadius.circular(30),
       splashColor: Colors.blue,
-      onTap: () => changeToMealrecipe(context),
+      onTap: () => _changeToMealrecipe(context),
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         elevation: 4,
@@ -92,6 +93,11 @@ class MealPreview extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  clipBehavior: Clip.antiAlias,
                   child: FadeInImage.assetNetwork(
                     placeholder: 'lib/images/loading.gif',
                     image: imageUrl,
@@ -99,11 +105,6 @@ class MealPreview extends StatelessWidget {
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                  clipBehavior: Clip.antiAlias,
                 ),
                 Positioned(
                   bottom: 10,
@@ -111,16 +112,12 @@ class MealPreview extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 0),
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
                         color: Colors.black38,
                         width: 150,
                         child: Text(
                           title,
-                          style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                           softWrap: true,
                           overflow: TextOverflow.clip,
@@ -164,7 +161,7 @@ class MealPreview extends StatelessWidget {
                     Text(price),
                   ],
                 ),
-                CustomSwitch(state),
+                _customSwitch(state),
               ],
             ),
             const SizedBox(

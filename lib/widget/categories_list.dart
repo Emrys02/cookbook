@@ -9,16 +9,16 @@ class CategoriesList extends StatelessWidget {
 
   final List<Meal> _availableMeals;
 
-  CategoriesList(this._availableMeals);
+  const CategoriesList(this._availableMeals,{super.key});
 
   @override
   Widget build(BuildContext context) {
+    final deviceProperties = MediaQuery.of(context);
+
     void changeToRecipe(context, String pagetitle, String pageid) {
-      Navigator.of(context).pushNamed(AvailableMeals.route,
-          arguments: {'id': pageid, 'title': pagetitle});
+      Navigator.of(context).pushNamed(AvailableMeals.route, arguments: {'id': pageid, 'title': pagetitle});
     }
 
-    final deviceProperties = MediaQuery.of(context);
 
     return Center(
       child: GridView(
@@ -31,8 +31,7 @@ class CategoriesList extends StatelessWidget {
         ),
         children: dummyCategories.map((cat) {
           var id = cat.id;
-          var foods = _availableMeals
-              .firstWhere((element) => element.categories.contains(id));
+          var foods = _availableMeals.firstWhere((element) => element.categories.contains(id));
           var imageurl = foods.imageUrl;
           return InkWell(
               onTap: () => changeToRecipe(context, cat.title, cat.id),
@@ -55,15 +54,11 @@ class CategoriesList extends StatelessWidget {
                     bottom: 5,
                     left: 5,
                     child: Container(
-                      decoration: BoxDecoration(
-                          color: Colors.black38,
-                          borderRadius: BorderRadius.circular(3)),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 1, horizontal: 3),
+                      decoration: BoxDecoration(color: Colors.black38, borderRadius: BorderRadius.circular(3)),
+                      padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 3),
                       child: Text(
                         cat.title,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.w400, fontSize: 15),
+                        style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 15),
                       ),
                     ),
                   ),

@@ -5,13 +5,12 @@ import '../widget/categories_list.dart';
 import '../widget/favourites_list.dart';
 
 class NavigationPages extends StatefulWidget {
-
-  List<Meal>_favouriteMeals;
-  List<Meal> _availableMeals;
-  NavigationPages(this._favouriteMeals, this._availableMeals);
+  final List<Meal> _favouriteMeals;
+  final List<Meal> _availableMeals;
+  const NavigationPages(this._favouriteMeals, this._availableMeals, {super.key});
 
   @override
-  _NavigationPagesState createState() => _NavigationPagesState();
+  State<NavigationPages> createState() => _NavigationPagesState();
 }
 
 class _NavigationPagesState extends State<NavigationPages> {
@@ -26,12 +25,9 @@ class _NavigationPagesState extends State<NavigationPages> {
 
   @override
   void initState() {
-    pages = [
-    CategoriesList(widget._favouriteMeals), FavouritesList(widget._favouriteMeals)
-  ];
+    pages = [CategoriesList(widget._availableMeals), FavouritesList(widget._favouriteMeals)];
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {

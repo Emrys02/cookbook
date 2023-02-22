@@ -1,29 +1,21 @@
 import 'package:cookbook/models/filter_data.dart';
+import 'package:flutter/material.dart';
 
 import '../widget/side_drawer.dart';
-import 'package:flutter/material.dart';
 
 class Filters extends StatefulWidget {
   static const route = 'filters';
-  bool glutenFree = false;
-  bool vegan = false;
-  bool lactoseFree = false;
 
   final FilterData currentFilters;
   final Function saveFilters;
 
-  Filters(this.currentFilters, this.saveFilters);
+  const Filters(this.currentFilters, this.saveFilters, {super.key});
 
   @override
   State<Filters> createState() => _FiltersState();
 }
 
-Widget Displayer(
-    {required bool value,
-    required Function function,
-    required String text,
-    required String subtitle,
-    required IconData icon}) {
+Widget displayer({required bool value, required Function function, required String text, required String subtitle, required IconData icon}) {
   return SwitchListTile(
     value: value,
     onChanged: (state) => function,
@@ -34,11 +26,14 @@ Widget Displayer(
 }
 
 class _FiltersState extends State<Filters> {
+  bool glutenFree = false;
+  bool vegan = false;
+  bool lactoseFree = false;
   @override
   void initState() {
-    widget.glutenFree = widget.currentFilters.gluten;
-    widget.lactoseFree = widget.currentFilters.lactose;
-    widget.vegan = widget.currentFilters.vegan;
+    glutenFree = widget.currentFilters.gluten;
+    lactoseFree = widget.currentFilters.lactose;
+    vegan = widget.currentFilters.vegan;
     super.initState();
   }
 
@@ -50,11 +45,8 @@ class _FiltersState extends State<Filters> {
         actions: [
           IconButton(
               onPressed: () {
-                var _filterData = FilterData(
-                    gluten: widget.glutenFree,
-                    lactose: widget.lactoseFree,
-                    vegan: widget.vegan);
-                widget.saveFilters(_filterData);
+                var filterData = FilterData(gluten: glutenFree, lactose: lactoseFree, vegan: vegan);
+                widget.saveFilters(filterData);
               },
               icon: const Icon(Icons.save_rounded)),
         ],
@@ -63,33 +55,33 @@ class _FiltersState extends State<Filters> {
       body: Expanded(
         child: Column(
           children: [
-            Displayer(
-              value: widget.glutenFree,
+            displayer(
+              value: glutenFree,
               text: 'Gluten Free',
               subtitle: 'Shows only gluten free food',
               function: (newValue) {
                 setState(() {
-                  widget.glutenFree = newValue;
+                  glutenFree = newValue;
                 });
               },
               icon: Icons.looks_one_rounded,
             ),
-            Displayer(
-              value: widget.lactoseFree,
+            displayer(
+              value: lactoseFree,
               function: (newValue) {
                 setState(() {
-                  widget.lactoseFree = newValue;
+                  lactoseFree = newValue;
                 });
               },
               text: 'Lactose Free',
               subtitle: 'Shows only lactose free food',
               icon: Icons.looks_two_rounded,
             ),
-            Displayer(
-              value: widget.vegan,
+            displayer(
+              value: vegan,
               function: (newValue) {
                 setState(() {
-                  widget.vegan = newValue;
+                  vegan = newValue;
                 });
               },
               text: 'Vegan',
@@ -100,11 +92,8 @@ class _FiltersState extends State<Filters> {
               width: double.infinity,
               child: TextButton.icon(
                 onPressed: () {
-                  var _filterData = FilterData(
-                      gluten: widget.glutenFree,
-                      lactose: widget.lactoseFree,
-                      vegan: widget.vegan);
-                  widget.saveFilters(_filterData);
+                  FilterData filterData = FilterData(gluten: glutenFree, lactose: lactoseFree, vegan: vegan);
+                  widget.saveFilters(filterData);
                 },
                 icon: const Icon(Icons.save_rounded),
                 label: const Text('Save'),

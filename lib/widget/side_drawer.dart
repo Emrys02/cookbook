@@ -11,29 +11,26 @@ class SideDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       elevation: 3,
-      child: Container(
+      child: SizedBox(
         child: Column(
           children: [
             ListTile(
-              leading: Icon(Icons.restaurant),
-              title: Text('Categories'),
+              leading: const Icon(Icons.restaurant),
+              title: const Text('Categories'),
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(CategoriesList.route);
-            
+                Navigator.of(context).pushReplacementNamed(CategoriesList.route);
               },
             ),
             ListTile(
-              leading: Icon(Icons.favorite_rounded),
-              title: Text('Favourites'),
+              leading: const Icon(Icons.favorite_rounded),
+              title: const Text('Favourites'),
               onTap: () {
-                Navigator.of(context)
-                    .pushReplacementNamed(FavouritesList.route);
+                Navigator.of(context).pushReplacementNamed(FavouritesList.route);
               },
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Filters'),
+              leading: const Icon(Icons.settings),
+              title: const Text('Filters'),
               onTap: () {
                 Navigator.of(context).pushReplacementNamed(Filters.route);
               },

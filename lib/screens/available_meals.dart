@@ -7,7 +7,7 @@ class AvailableMeals extends StatelessWidget {
   final List<Meal> _availableMeals;
   final Function _toggleFavourite;
   final Function _isFavourite;
-  const AvailableMeals(this._availableMeals, this._toggleFavourite, this._isFavourite);
+  const AvailableMeals(this._availableMeals, this._toggleFavourite, this._isFavourite, {super.key});
   @override
   Widget build(BuildContext context) {
     final details =
